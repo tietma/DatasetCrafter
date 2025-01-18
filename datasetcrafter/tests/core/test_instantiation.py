@@ -1,0 +1,51 @@
+
+
+import pandas as pd
+import pytest
+import tempfile
+import os
+
+from datasetcrafter.core import DataSetCreator
+from datasetcrafter.core import DataSetCreatorFactory
+
+aa = 4
+
+
+@pytest.fixture
+def csv_file_path():
+    """
+    Create a temporary csv file from a mock dataframe
+
+    Yields:
+        str: The file path to the created csv file
+    """
+    df_mock = pd.DataFrame({"column_names": ["car_type", "color", "cost"],
+                            "data_type":["str", "str", "float"], 
+                            "range": ["", "", "5000-120000"]})
+
+    with tempfile.NamedTemporaryFile(mode="w+", suffix=".csv", delete=False) as temp_file:
+        df_mock.to_csv(temp_file.name, index=False)
+        
+        temp_file.seek(0)
+        yield temp_file.name
+
+    os.remove(temp_file.name)
+
+def test_csv_instantiation(csv_file_path):
+    param = pd.read_csv(csv_file_path).to_dict()
+    
+    dsc = DataSetCreator(param)
+
+    assert param == dsc.schema
+
+
+def test_factory_instantiation_existing_path(csv_file_path):
+    dsc = DataSetCreatorFactory.create(csv_file_path)
+
+
+def test_factory_non_existing_file_path():
+    dsc = DataSetCreatorFactory.create("valid_schema_source")
+
+
+
+    
