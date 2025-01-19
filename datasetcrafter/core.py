@@ -1,11 +1,12 @@
 from pathlib import Path
 import copy 
+import pandas as pd
 
-CHECK_SUM = 4
+from file_writers import FileWriter
 
 class DataSetCreator:
     """
-    The DatasetCrafter is the core component for creating datasets
+    The DatasetCrafter is the core compofnent for creating datasets
 
     Attributes:
         schema (dict): schema of the dataset 
@@ -14,6 +15,11 @@ class DataSetCreator:
     def __init__(self, schema: dict):
         self.schema = copy.deepcopy(schema)
 
+    def _create_dataset(self):
+        self.dataset = pd.DataFrame.from_dict(self.schema)
+
+    def generate_dataset(self):
+        self._create_dataset()
 
 
 class DataSetCreatorFactory: 
@@ -35,4 +41,7 @@ class DataSetCreatorFactory:
                 raise FileNotFoundError(f"The provided file {schema_source} can't be found")
             if path.suffix != ".csv":
                 raise ValueError(f"The provided file {schema_source} is not a csv file")
+            
+            schema = pd.read_csv(schema_source).to_dict()
+            return DataSetCreator(schema)
                 

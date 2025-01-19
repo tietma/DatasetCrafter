@@ -5,10 +5,9 @@ import pytest
 import tempfile
 import os
 
-from datasetcrafter.core import DataSetCreator
-from datasetcrafter.core import DataSetCreatorFactory
+from core import DataSetCreator
+from core import DataSetCreatorFactory
 
-aa = 4
 
 
 @pytest.fixture
@@ -44,7 +43,8 @@ def test_factory_instantiation_existing_path(csv_file_path):
 
 
 def test_factory_non_existing_file_path():
-    dsc = DataSetCreatorFactory.create("valid_schema_source")
+    with pytest.raises(FileNotFoundError):
+        dsc = DataSetCreatorFactory.create("invalid_schema_source") 
 
 
 
