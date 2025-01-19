@@ -9,7 +9,6 @@ from core import DataSetCreator
 from core import DataSetCreatorFactory
 
 
-
 @pytest.fixture
 def csv_file_path():
     """
@@ -33,18 +32,18 @@ def csv_file_path():
 def test_csv_instantiation(csv_file_path):
     param = pd.read_csv(csv_file_path).to_dict()
     
-    dsc = DataSetCreator(param)
+    dsc = DataSetCreator(param, 100)
 
     assert param == dsc.schema
 
 
 def test_factory_instantiation_existing_path(csv_file_path):
-    dsc = DataSetCreatorFactory.create(csv_file_path)
+    dsc = DataSetCreatorFactory.create(csv_file_path, 100)
 
 
 def test_factory_non_existing_file_path():
     with pytest.raises(FileNotFoundError):
-        dsc = DataSetCreatorFactory.create("invalid_schema_source") 
+        dsc = DataSetCreatorFactory.create("invalid_schema_source", 100) 
 
 
 
