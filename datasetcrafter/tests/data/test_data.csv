@@ -1,4 +1,0 @@
-column_name,format_type,allowed_values,distribution,range,weights,unique
-brand,str,"Ferrari, Mercedes, Opel",,,"0.1, 0.2, 0.7",
-Color,Str,"Red, Blue, Green",,,"0.3, 0.3, 0.4",
-cost,Int,,,5000-150000,,
