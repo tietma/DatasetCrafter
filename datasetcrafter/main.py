@@ -9,20 +9,14 @@ from core import DataSetCreatorFactory
 def create_dummy_dataset(format_def_csv_path: str, file_output_path: str, num_entries: int, stratify_by=None):
     dsc = DataSetCreatorFactory.create(format_def_csv_path, num_entries)
     file_writer = SingleFileWriter(file_output_path)
+
+
     dsc.generate_dataset()
     file_writer.write_data(dsc.dataset)
     
     
 if __name__ == "__main__":
-    """
-    car_types = [2,3,4]
-    weights = [0.2, 0.2, 0.6]
 
-    values = random.choices(car_types, k= 100)
-
-    print(values)    
-    """
-    
     path_test_data = "/Users/matthias/test_data/test_data.csv"
     path_output = "/Users/matthias/generated/cars.csv"
 
