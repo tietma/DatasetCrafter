@@ -9,3 +9,6 @@ dependencies = [
     "pandas-stubs>=2.2.2.240807",
     "pytest>=8.3.4",
 ]
+
+[project.urls]
+"Homepage" = "https://github.com/tietma/DatasetCrafter"
